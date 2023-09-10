@@ -1,5 +1,15 @@
 # DumpItForLinux
 
+# Special Note
+This is a forked repository of the Magnet Forensics DumpItForLinux project. The purpose of this repository is for the release and management of static compiled binaries, which currently are not provided by the main project. This should make it easier for those unfamiliar with compiling static Rust binaries to quickly use this tool. See the Releases section for further.
+
+This repository will regularly synchronize its code base with the main project. Therefore, please refer to the main project for code contributions and general bug reports (bug reports related to execution errors with the compiled binaries are still appropriate here, though).
+
+## No Warranty - Use at Your Own Risk
+These binaries are provided as a convenience only. They should not be relied upon in a production setting without conducting your own compatibility testing for that specific environment. If any doubt exists, please refer to the main DumpItForLinux project and follow the instructions of compiling the code for your specific platform.
+
+---
+
 # Getting Started
 `dumpit-linux` (or `DumpItForLinux`) is very straight forward - the only thing you need is root permission as it relies on /proc/kcore to create a compact version, and is compatible with the old and new versions of `/proc/kcore`.
 
