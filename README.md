@@ -22,6 +22,19 @@ In short, why you should use this utility:
 - User-land. This utility relies on `/proc/kcore` meaning that no Linux kernel module is required. Root permission is, however, needed.
 
 ## Building
+### Google Container Optimized OS
+```
+toolkit
+apt-get update
+apt-get install pkg-config liblzma-dev
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+mkdir ../dumps
+cargo run --release -- -r ../dumps/dump.$container_host_build_id.core
+echo Get symbols too
+curl https://storage.googleapis.com/cos-tools/$container_host_build_id/vmlinux > ../dumps/vmlinux-$container_host_build_id
+```
+Files can be remotely recovered with `gcloud compute scp`
+### Linux
 1. [Install Rust](https://www.rust-lang.org/tools/install)
 2. Run the following command
 ```
@@ -68,6 +81,10 @@ tar -I zstd -xvf <filename>.tar.zst
 
 ## Troubleshooting
 ### Installing debugging symbols
+#### Google Container OS / Google Kubernetes Engine
+```
+curl https://storage.googleapis.com/cos-tools/$container_host_build_id/vmlinux > symbols/vmlinux-$container_host_build_id
+```
 #### Ubuntu
 [Learn more about Ubuntu Debug Symbol Packages](https://wiki.ubuntu.com/Debug%20Symbol%20Packages)
 
@@ -190,6 +207,10 @@ Refer to the official page, to find out [how to install drgn](https://github.com
 ```
 sudo pip3 install drgn
 drgn -c <path to dump>
+```
+You may need to provide the path to the vmlinux file in some instances, with Google Container OS for example, this can be achieve with the `-s` parameter.
+```
+drgn -c dump.$container_host_build_id.core -s vmlinux-$container_host_build_id
 ```
 
 #### Running drgn
